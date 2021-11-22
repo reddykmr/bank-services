@@ -4,7 +4,7 @@ cloud:
       access-key: 
       secret-key: 
     region:
-      static: 
+      static: ap-southeast-1
     stack:
       auto: false
 
