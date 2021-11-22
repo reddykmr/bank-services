@@ -5,11 +5,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.example.model.Bank;
+import com.example.model.Customer;
 @Repository
-public interface CustomerRepository extends JpaRepository<Bank, String> {
-	@Query("SELECT b FROM Bank b WHERE b.accNo = ?1")
-	public Bank getBankAccountByAccNo(String accno);
-	@Query("SELECT b FROM Bank b WHERE b.accNo = ?1")
-	public Bank getBankAccount(String accno);
+public interface CustomerRepository extends JpaRepository<Customer, Integer> {
+	
 
 }

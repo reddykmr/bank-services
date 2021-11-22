@@ -4,20 +4,20 @@ package com.example.model;
 public class AccountRequestInfo {
 	     
 	     private Bank bankdetails;
-	     private Customer customerdeatisl;
+	     private Customer customerdetails;
 		public Bank getBankdetails() {
 			return bankdetails;
 		}
 		public void setBankdetails(Bank bankdetails) {
 			this.bankdetails = bankdetails;
 		}
-		public Customer getCustomerdeatisl() {
-			return customerdeatisl;
+		public Customer getCustomerdetails() {
+			return customerdetails;
 		}
-		public void setCustomerdeatisl(Customer customerdeatisl) {
-			this.customerdeatisl = customerdeatisl;
+		public void setCustomerdetails(Customer customerdetails) {
+			this.customerdetails = customerdetails;
 		}
-	     
+		
 	     
 	     
 	     

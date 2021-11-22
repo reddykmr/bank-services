@@ -8,8 +8,6 @@ import org.springframework.test.context.ContextConfiguration;
 @ContextConfiguration
 class BankServicesApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+	
 
 }

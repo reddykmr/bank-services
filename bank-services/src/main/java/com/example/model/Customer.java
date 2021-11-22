@@ -1,32 +1,22 @@
 package com.example.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 
 @Entity
 public class Customer {
 	 @Id
+	
 	 private int cId;
 	 @Column(name = "cname")
 	 private String cName;
+
 	 private String panNo;
+	
 	 private String fname;
 	 private String gmail;
-	 @ManyToMany(targetEntity = Bank.class, cascade = CascadeType.ALL)
-	 @JoinTable(name="customers_banks",
-	            joinColumns = @JoinColumn(referencedColumnName = "cId",name = "customer_id"),
-	            inverseJoinColumns = @JoinColumn(referencedColumnName = "accNo",name = "account_no"))       
-	 private Set<Bank> banks=new HashSet<Bank>();
+   
 	 
 	 
 	 public int getcId() {
@@ -41,14 +31,6 @@ public class Customer {
 	public void setcName(String cName) {
 		this.cName = cName;
 	}
-
-	public Set<Bank> getBanks() {
-		return banks;
-	}
-	public void setBanks(Set<Bank> banks) {
-		this.banks = banks;
-	}
-	
 	
 
 	public String getPanNo() {

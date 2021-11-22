@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.admin.repository.BankRepository;
+import com.example.admin.repository.CustomerRepository;
 import com.example.model.AccountRequestInfo;
 import com.example.model.Bank;
 import com.example.model.Customer;
@@ -21,17 +22,20 @@ public class BankServiceImpl implements BankService {
 	@Autowired
 	private BankRepository bankRepository;
 	
+	@Autowired
+	private CustomerRepository customerRepository;
+	
 
 	@Override
-	public Bank createAccount(AccountRequestInfo requestInfo) {
+	public String createAccount(AccountRequestInfo requestInfo) {
 		if(requestInfo!=null) {
-		      Bank bank=requestInfo.getBankdetails();
+			  Customer customer=requestInfo.getCustomerdetails();
+		      Bank bank=requestInfo.getBankdetails(); 
 		      bankRepository.save(bank);
-		      return bank ;
+		      customerRepository.save(customer);
+		      return "account created successfully" ;
 		}
-		return null;
-		
-		
+		return "Data not found";
 	}
 
 }

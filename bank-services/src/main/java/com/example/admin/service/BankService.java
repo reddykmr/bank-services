@@ -4,6 +4,6 @@ import com.example.model.AccountRequestInfo;
 import com.example.model.Bank;
 
 public interface BankService {
-	public Bank createAccount(AccountRequestInfo requestInfo);
+	public String createAccount(AccountRequestInfo requestInfo);
 
 }

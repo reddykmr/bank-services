@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.admin.service.BankService;
+import com.example.admin.service.CustomerService;
 import com.example.model.AccountRequestInfo;
 import com.example.model.Bank;
 import com.example.model.Customer;
@@ -20,29 +21,29 @@ public class BankController {
 	
 	
 	
+	
+	
 	@PostMapping("/createAcc")
 	public String createAccount() {
 		   AccountRequestInfo accountRequestInfo=new AccountRequestInfo();
 		   Bank bank=new Bank();
 		   Customer customer=new Customer();
 		   
-		   bank.setAccNo("1111234567");
-		   bank.setBankName("HDFC");
+		   bank.setAccNo("1111234568");
+		   bank.setBankName("ICICI");
 		   bank.setType("Savings");
 		   bank.setAccoutBalance(00.00);
 		   bank.setStatus(AccountStatus.ACTIVATED.getStatus());
 		   
 		   customer.setcId(100);
-		   customer.setcName("mahesh");
-		   customer.setFname("karna malyadri");
-		   customer.setPanNo("HTYPK9826A");
-		   customer.setGmail("maheshkarna48@gmail.com");
+		   customer.setcName("masthan");
+		   customer.setFname("burredy masthan");
+		   customer.setPanNo("HTYPK9826B");
+		   customer.setGmail("masthan188@gmail.com");
 		   
-		   customer.getBanks().add(bank);
-		   bank.getCustomers().add(customer);
 		   
 		   accountRequestInfo.setBankdetails(bank);
-		   accountRequestInfo.setCustomerdeatisl(customer);
+		   accountRequestInfo.setCustomerdetails(customer);
 		   bankService.createAccount(accountRequestInfo);
 		   
 		return "successfully created";
