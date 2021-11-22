@@ -9,6 +9,9 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 
+/*
+ * Created by Mahesh Karna
+ */
 public class StorageConfig {
 	@Value("${cloud.aws.credentials.access-key}")
     private String accessKey;

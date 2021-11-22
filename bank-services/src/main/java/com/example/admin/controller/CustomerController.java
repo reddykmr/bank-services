@@ -14,6 +14,9 @@ import com.example.admin.service.CustomerService;
 import com.example.model.Bank;
 import com.example.model.TransferRequest;
 
+/*
+ * Created by Mahesh Karna
+ */
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
