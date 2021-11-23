@@ -1,7 +1,7 @@
 package com.example.admin.service;
 
 import java.sql.SQLException;
-
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +14,7 @@ import com.example.model.AccountRequestInfo;
 import com.example.model.AccountResponseInfo;
 import com.example.model.Bank;
 import com.example.model.Customer;
-
-
+import com.example.utils.AccountStatus;
 
 /*
  * Created By Mahesh Karna
@@ -31,14 +30,14 @@ public class BankServiceImpl implements BankService {
 
 	@Autowired
 	private CustomerRepository customerRepository;
-    
+
 	/*
 	 * Creating Bank Account
 	 */
 	@Override
 	public AccountResponseInfo createAccount(AccountRequestInfo requestInfo) {
 		AccountResponseInfo responseInfo = null;
-		
+
 		if (requestInfo != null) {
 			responseInfo = new AccountResponseInfo();
 			Customer customer = requestInfo.getCustomerdetails();
@@ -52,6 +51,40 @@ public class BankServiceImpl implements BankService {
 
 		}
 		return responseInfo;
+	}
+
+	@Override
+	public String blockAccount(Bank bank) {
+		         
+				 
+		         if(AccountStatus.BLOCKED.getStatus().equalsIgnoreCase(bank.getStatus())) {
+		        	     bankRepository.updateAccountStatus(bank.getStatus(), bank.getAccNo());
+		        	    return" Account is blocked successfully";
+		         }
+			 
+
+	return"Account is not blocked successfully";
+
+	}
+
+	@Override
+	public Bank updateAccountDetails(Bank bank1) {
+
+		Bank resultbank = null;
+		if (bank1 != null) {
+			resultbank = bankRepository.save(bank1);
+		}
+
+		return resultbank;
+	}
+
+	private Bank getbankDetails(String accno) {
+		Optional<Bank> optional = bankRepository.findById(accno);
+		Bank bank = null;
+		if (optional.isPresent()) {
+			bank = optional.get();
+		}
+		return bank;
 	}
 
 }
