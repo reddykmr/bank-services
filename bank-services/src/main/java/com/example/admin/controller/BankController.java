@@ -3,6 +3,8 @@ package com.example.admin.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,11 +45,16 @@ public class BankController {
 		  return ResponseEntity.status(HttpStatus.OK).body(status);
 		
 	}
-	@PutMapping("updateaccount")
+	@PutMapping("/updateaccount")
 	public ResponseEntity<Bank> updateAccount(@RequestBody Bank bank){
 		  Bank resultbank=bankService.updateAccountDetails(bank);
 		  return ResponseEntity.status(HttpStatus.OK).body(resultbank);
 		
+	}
+	@DeleteMapping("/deletedata/{accno}")
+	public ResponseEntity<String> deleteAccount(@PathVariable String accno){
+		String status=bankService.deleteAccount(accno);   
+		return ResponseEntity.status(HttpStatus.OK).body(status);
 	}
 	
 

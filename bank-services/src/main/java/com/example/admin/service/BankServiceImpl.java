@@ -55,15 +55,13 @@ public class BankServiceImpl implements BankService {
 
 	@Override
 	public String blockAccount(Bank bank) {
-		         
-				 
-		         if(AccountStatus.BLOCKED.getStatus().equalsIgnoreCase(bank.getStatus())) {
-		        	     bankRepository.updateAccountStatus(bank.getStatus(), bank.getAccNo());
-		        	    return" Account is blocked successfully";
-		         }
-			 
 
-	return"Account is not blocked successfully";
+		if (AccountStatus.BLOCKED.getStatus().equalsIgnoreCase(bank.getStatus())) {
+			bankRepository.updateAccountStatus(bank.getStatus(), bank.getAccNo());
+			return " Account is blocked successfully";
+		}
+
+		return "Account is not blocked successfully";
 
 	}
 
@@ -76,6 +74,16 @@ public class BankServiceImpl implements BankService {
 		}
 
 		return resultbank;
+	}
+
+	@Override
+	public String deleteAccount(String accno) {
+		Bank bank = getbankDetails(accno);
+		if (bank != null) {
+			bankRepository.delete(bank);
+			return "Account deleted successfully";
+		}
+		return "Account not found";
 	}
 
 	private Bank getbankDetails(String accno) {

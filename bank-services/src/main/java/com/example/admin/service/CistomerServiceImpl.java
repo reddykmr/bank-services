@@ -50,7 +50,7 @@ public class CistomerServiceImpl implements CustomerService {
 		
 		if (bankAccount.isPresent()) {
 			if(AccountStatus.ACTIVATED.getStatus().equalsIgnoreCase(bankAccount.get().getStatus())){
-				double balance = bankAccount.get().getAccoutBalance();
+				double balance = bankAccount.get().getAccountBalance();
 				return "Account Balace  :  " + balance;
 			}
 			else {
@@ -72,7 +72,7 @@ public class CistomerServiceImpl implements CustomerService {
 		if (optionalbank.isPresent()) {
 			if(AccountStatus.ACTIVATED.getStatus().equalsIgnoreCase(optionalbank.get().getStatus())){
 				bank = optionalbank.get();
-				double balance = bank.getAccoutBalance();
+				double balance = bank.getAccountBalance();
 				if(balance>0 && amount>0) {
 				double updatedbalance = balance +amount;
 				bankRepository.depositeMoney(updatedbalance, accno);
@@ -109,10 +109,10 @@ public class CistomerServiceImpl implements CustomerService {
 		if (optionalbank.isPresent()) {
 			bank = optionalbank.get();
 			if(AccountStatus.ACTIVATED.getStatus().equalsIgnoreCase(optionalbank.get().getStatus())){
-				double balance = bank.getAccoutBalance();
+				double balance = bank.getAccountBalance();
 				if(balance>0 && amount>0) {
 				double updatedbalance = balance - amount;
-				bank.setAccoutBalance(updatedbalance);
+				bank.setAccountBalance(updatedbalance);
 				resultbank = bankRepository.save(bank);
 				}
 				else {
@@ -130,16 +130,16 @@ public class CistomerServiceImpl implements CustomerService {
 	private void processingTransferRequest(Optional<Bank> bank1, Optional<Bank> bank2, double amount1) {
 		if (bank1.isPresent() && bank2.isPresent()) {
 			if(AccountStatus.ACTIVATED.getStatus().equalsIgnoreCase(bank1.get().getStatus()) && AccountStatus.ACTIVATED.getStatus().equalsIgnoreCase(bank2.get().getStatus())){
-				double balance1 = bank1.get().getAccoutBalance();
-				double balance2 = bank2.get().getAccoutBalance();
+				double balance1 = bank1.get().getAccountBalance();
+				double balance2 = bank2.get().getAccountBalance();
 	
 				if (balance1 > 0) {
 					double updatedbalance2 = balance2 + amount1;
 					double updatedbalance1 = balance1 - amount1;
 					Bank updateBalance2 = bank2.get();
 					Bank updateBalance1 = bank1.get();
-					updateBalance2.setAccoutBalance(updatedbalance2);
-					updateBalance1.setAccoutBalance(updatedbalance1);
+					updateBalance2.setAccountBalance(updatedbalance2);
+					updateBalance1.setAccountBalance(updatedbalance1);
 					bankRepository.save(updateBalance2);
 					bankRepository.save(updateBalance1);
 	

@@ -45,14 +45,14 @@ public class CustomerController {
 		   Bank bank1=requestInfo.getBank1();
 		   Bank bank2=requestInfo.getBank2();
 		Bank updatedAccount=customerService.transferMoney(bank1.getAccNo(), amount, bank2.getAccNo());
-		return " Updated Account Balance :  "+updatedAccount.getAccoutBalance()+"  Acc No  "+updatedAccount.getAccNo();
+		return " Updated Account Balance :  "+updatedAccount.getAccountBalance()+"  Acc No  "+updatedAccount.getAccNo();
 		
 	}
 	@PutMapping("withdraw/{accno}/{amount}")
 	public String withdrawMoney(@PathVariable String accno,@PathVariable double amount) {
 		       
 		Bank updatedAccount=customerService.withdrawMoney(accno, amount);
-		return " Updated Account Balance :  "+updatedAccount.getAccoutBalance()+"  Acc No  "+updatedAccount.getAccNo();
+		return " Updated Account Balance :  "+updatedAccount.getAccountBalance()+"  Acc No  "+updatedAccount.getAccNo();
 		
 	}
 

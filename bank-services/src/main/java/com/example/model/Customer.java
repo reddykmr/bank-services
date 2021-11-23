@@ -16,6 +16,7 @@ public class Customer {
 	
 	 private String fname;
 	 private String gmail;
+	 private String accno;
    
 	 
 	 
@@ -46,13 +47,18 @@ public class Customer {
 		this.fname = fname;
 	}
 
-
-
 	public String getGmail() {
 		return gmail;
 	}
 	public void setGmail(String gmail) {
 		this.gmail = gmail;
+	}
+
+	public String getAccno() {
+		return accno;
+	}
+	public void setAccno(String accno) {
+		this.accno = accno;
 	}
 
 

@@ -11,5 +11,6 @@ public interface BankService {
 	public AccountResponseInfo createAccount(AccountRequestInfo requestInfo);
 	public String blockAccount(Bank bank);
 	public Bank updateAccountDetails(Bank bank1);
+	public String deleteAccount(String accno);
 
 }

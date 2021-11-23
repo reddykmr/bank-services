@@ -11,6 +11,7 @@ public class Bank {
 	private String type;
 	private String status;
 	private double accountBalance;
+	private String accCrtDate;
 	public String getAccNo() {
 		return accNo;
 	}
@@ -36,13 +37,19 @@ public class Bank {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	public double getAccoutBalance() {
+	public double getAccountBalance() {
 		return accountBalance;
 	}
-	public void setAccoutBalance(double accountBalance) {
+	public void setAccountBalance(double accountBalance) {
 		this.accountBalance = accountBalance;
 	}
+	public String getAccCrtDate() {
+		return accCrtDate;
+	}
+	public void setAccCrtDate(String accCrtDate) {
+		this.accCrtDate = accCrtDate;
+	}
+	
 	
 	
 	
