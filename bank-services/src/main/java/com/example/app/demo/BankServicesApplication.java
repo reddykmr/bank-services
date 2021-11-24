@@ -9,13 +9,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @EnableTransactionManagement
-@ComponentScan("com.example")
+@ComponentScan(basePackages = {"com.example"})
 @EnableJpaRepositories("com.example")
 @EntityScan("com.example")
 public class BankServicesApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		SpringApplication.run(BankServicesApplication.class, args);
+      
+       
 	}
 
 }
