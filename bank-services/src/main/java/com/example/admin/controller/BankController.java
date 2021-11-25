@@ -26,6 +26,10 @@ import com.example.model.AccountResponseInfo;
 import com.example.model.Bank;
 import com.example.model.TransactionLogs;
 import com.example.pdf.PdfGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.json.JsonSanitizer;
+
 
 /*
  * Created by Mahesh Karna
@@ -58,7 +62,10 @@ public class BankController {
 
 	@PutMapping("/blockaccount")
 	public ResponseEntity<String> blockAccount(@RequestBody Bank bank) {
-		String status = bankService.blockAccount(bank);
+		String status=null;
+		if(!validateBankdetails(bank)) {
+		status = bankService.blockAccount(bank);
+		}
 
 		return ResponseEntity.status(HttpStatus.OK).body(status);
 
@@ -94,6 +101,25 @@ public class BankController {
 
 		return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF)
 				.body(new InputStreamResource(bis));
+	}
+	
+	private boolean validateBankdetails(Bank bank)  {
+		    ObjectMapper mapper=new ObjectMapper();
+		    boolean bReturn =false;
+		      try {
+				String inputjson= mapper.writeValueAsString(bank);
+				    bReturn=sanitize(inputjson);
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+			return bReturn;
+	}
+	private boolean sanitize(String inputjson) {
+		String wellFormedJson = JsonSanitizer.sanitize(inputjson);
+		if(wellFormedJson != null && inputjson.equalsIgnoreCase(wellFormedJson))
+			return true;
+		else
+			return false;
 	}
 
 }

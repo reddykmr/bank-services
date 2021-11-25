@@ -7,6 +7,7 @@ public enum AccountStatus {
 	BLOCKED("BLOCKED");
 	
 	private String status;
+	
 	AccountStatus(String status) {
 		this.status=status;
 	}
