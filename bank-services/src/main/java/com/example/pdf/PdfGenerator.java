@@ -13,17 +13,21 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 @Component("pdfgenerator")
 public class PdfGenerator {
+	 static Font COURIER_SMALL_FOOTER = new Font(Font.FontFamily.COURIER,12,Font.BOLD);
+	 static Font COURIER_SMALL_HEADER = new Font(Font.FontFamily.COURIER,10,Font.BOLD);
 	
 	public static ByteArrayInputStream getLogs(List<TransactionLogs> logs) {
 
         Document document = new Document();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
+       
 
         try {
 
@@ -95,8 +99,9 @@ public class PdfGenerator {
 
             PdfWriter.getInstance(document, out);
             document.open();
+            addDocTitle(document,logs.get(0).getAccno());
             document.add(table);
-
+            addFooter(document);
             document.close();
 
         } catch (DocumentException ex) {
@@ -106,4 +111,34 @@ public class PdfGenerator {
 
         return new ByteArrayInputStream(out.toByteArray());
     }
+	private static void addDocTitle(Document document,String accno) throws DocumentException {
+		Paragraph p1 = new Paragraph();
+		p1.setAlignment(Element.ALIGN_CENTER);
+		p1.add(new Paragraph("                                                                         "+
+		                     "                                                                         "+
+				             "HDFC BANK",COURIER_SMALL_HEADER));
+		p1.add(new Paragraph("                                                                         "+
+                             "                                                                         "+
+				             "USER NAME :"+"KARNA MAHESH",COURIER_SMALL_HEADER));
+		p1.add(new Paragraph("                                                                         "+
+                             "                                                                         "+
+	                         "ACC NO    :"+accno,COURIER_SMALL_HEADER));
+		leaveEmptyLine(p1, 2);
+
+		document.add(p1);
+
+	}
+	private static void addFooter(Document document) throws DocumentException {
+		Paragraph p1 = new Paragraph();
+		p1.setAlignment(Element.ALIGN_MIDDLE);
+		leaveEmptyLine(p1, 2);
+		p1.add(new Paragraph("-----------------------------Thank You---------------------------------",COURIER_SMALL_FOOTER));
+		document.add(p1);
+
+	}
+	private static void leaveEmptyLine(Paragraph paragraph, int number) {
+		for (int i = 0; i < number; i++) {
+			paragraph.add(new Paragraph(" "));
+		}
+	}
 }
