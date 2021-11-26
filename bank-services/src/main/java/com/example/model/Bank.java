@@ -12,6 +12,8 @@ public class Bank {
 	private String status;
 	private double accountBalance;
 	private String accCrtDate;
+	private String userName;
+	private String password;
 	public String getAccNo() {
 		return accNo;
 	}
@@ -48,6 +50,18 @@ public class Bank {
 	}
 	public void setAccCrtDate(String accCrtDate) {
 		this.accCrtDate = accCrtDate;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	

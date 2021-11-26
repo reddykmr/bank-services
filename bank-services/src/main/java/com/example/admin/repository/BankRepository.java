@@ -19,5 +19,7 @@ public interface BankRepository extends  CrudRepository<Bank, String> {
 	@Modifying
 	@Query("UPDATE Bank b set b.accountBalance=?1 where b.accNo=?2")
 	public void depositeMoney(double amount,String accno);
+	@Query("SELECT bank FROM Bank bank where bank.userName=?1")
+	public Bank findByUserName(String username);
 
 }

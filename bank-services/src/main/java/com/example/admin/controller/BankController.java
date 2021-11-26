@@ -9,6 +9,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,13 +25,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.admin.service.BankService;
 import com.example.model.AccountRequestInfo;
 import com.example.model.AccountResponseInfo;
+import com.example.model.AuthRequest;
 import com.example.model.Bank;
 import com.example.model.TransactionLogs;
 import com.example.pdf.PdfGenerator;
+import com.example.utils.JwtUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.json.JsonSanitizer;
-
 
 /*
  * Created by Mahesh Karna
@@ -37,6 +40,12 @@ import com.google.json.JsonSanitizer;
 @RestController
 @RequestMapping("/admin")
 public class BankController {
+	
+	
+	@Autowired
+    private JwtUtil jwtUtil;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
 	@Autowired
 	private BankService bankService;
@@ -62,9 +71,9 @@ public class BankController {
 
 	@PutMapping("/blockaccount")
 	public ResponseEntity<String> blockAccount(@RequestBody Bank bank) {
-		String status=null;
-		if(!validateBankdetails(bank)) {
-		status = bankService.blockAccount(bank);
+		String status = null;
+		if (validateBankdetails(bank)) {
+			status = bankService.blockAccount(bank);
 		}
 
 		return ResponseEntity.status(HttpStatus.OK).body(status);
@@ -102,21 +111,36 @@ public class BankController {
 		return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF)
 				.body(new InputStreamResource(bis));
 	}
-	
-	private boolean validateBankdetails(Bank bank)  {
-		    ObjectMapper mapper=new ObjectMapper();
-		    boolean bReturn =false;
-		      try {
-				String inputjson= mapper.writeValueAsString(bank);
-				    bReturn=sanitize(inputjson);
-			} catch (JsonProcessingException e) {
-				e.printStackTrace();
-			}
-			return bReturn;
+
+	@PostMapping("/login")
+	public String generateToken(@RequestBody AuthRequest authRequest) throws Exception {
+		try {
+			authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+		} catch (Exception ex) {
+			throw new Exception("inavalid username/password");
+		}
+		String token = jwtUtil.generateToken(authRequest.getUsername());
+		System.out.println("token id " + token);
+
+		return token;
 	}
+
+	private boolean validateBankdetails(Bank bank) {
+		ObjectMapper mapper = new ObjectMapper();
+		boolean bReturn = false;
+		try {
+			String inputjson = mapper.writeValueAsString(bank);
+			bReturn = sanitize(inputjson);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return bReturn;
+	}
+
 	private boolean sanitize(String inputjson) {
 		String wellFormedJson = JsonSanitizer.sanitize(inputjson);
-		if(wellFormedJson != null && inputjson.equalsIgnoreCase(wellFormedJson))
+		if (wellFormedJson != null && inputjson.equalsIgnoreCase(wellFormedJson))
 			return true;
 		else
 			return false;
